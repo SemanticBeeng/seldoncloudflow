@@ -15,9 +15,8 @@ import scala.collection.mutable.ListBuffer
 // Implementation is based on
 // https://github.com/saturnism/grpc-by-example-java/blob/master/kubernetes-lb-example/echo-client-lb-api/src/main/java/com/example/grpc/client/KubernetesNameResolver.java
 //
-class KubernetesNameResolver(namespace: String, name: String, port: Int, params: Attributes,
-                             timerServiceResource:          SharedResourceHolder.Resource[ScheduledExecutorService],
-                             sharedChannelExecutorResource: SharedResourceHolder.Resource[Executor]) extends NameResolver {
+class KubernetesNameResolver(namespace: String, name: String, port: Int,
+                             timerServiceResource: SharedResourceHolder.Resource[ScheduledExecutorService]) extends NameResolver {
 
   private val kubernetesClient = new DefaultKubernetesClient()
   private var listener: NameResolver.Listener = _

@@ -80,7 +80,7 @@ object TensorConverter {
   }
 
   private def flaten(original: Seq[Any]): Seq[String] = {
-    if (original(0).isInstanceOf[util.ArrayList[Any]])
+    if (original(0).isInstanceOf[util.ArrayList[_]])
       original.toSeq.map { value ⇒
         flaten(value.asInstanceOf[util.ArrayList[Any]].asScala)
       }.flatten

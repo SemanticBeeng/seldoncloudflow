@@ -29,7 +29,7 @@ class KubernetesNameResolverProvider extends NameResolverProvider {
         parts.size match {
           case s if s == 4 ⇒
             try {
-              new KubernetesNameResolver(parts(1), parts(2), parts(3).toInt, params, GrpcUtil.TIMER_SERVICE, GrpcUtil.SHARED_CHANNEL_EXECUTOR)
+              new KubernetesNameResolver(parts(1), parts(2), parts(3).toInt, GrpcUtil.TIMER_SERVICE)
             } catch {
               case t: Throwable ⇒ throw new IllegalArgumentException("Unable to parse port number", t)
             }
