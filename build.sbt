@@ -9,6 +9,7 @@ lazy val thisVersion = "0.1"
 
 scalaVersion in ThisBuild := "2.12.10"
 version in ThisBuild := thisVersion
+test in ThisBuild := {}
 
 lazy val protocols =  (project in file("./protocol"))
   .settings(

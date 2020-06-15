@@ -18,7 +18,6 @@ kubectl create namespace seldon
 kubectl config set-context $(kubectl config current-context) --namespace=seldon
 kubectl create namespace seldon-system
 helm install seldon-core seldon-core-operator --repo https://storage.googleapis.com/seldon-charts --set ambassador.enabled=true --set usageMetrics.enabled=true --namespace seldon-system
-#helm install seldon-core --set ambassador.enabled=true --set usageMetrics.enabled=true --namespace seldon-system /Users/boris/BigData/seldon-core/helm-charts/seldon-core-operator
 kubectl rollout status deploy/seldon-controller-manager -n seldon-system
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm repo update
@@ -106,7 +105,8 @@ Also see [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-r
 To scale pipeline deployment use the following command:
 ````
 kubectl cloudflow scale <app> <streamlet> <n>
-````get pods -n sensordata
+get pods -n sensordata
+````
 where:
 * `app` is the name of deployed cloudflow application. To get deployed application's names execute `kubectl cloudflow list` 
 and pick the appropriate application, for example, `seldon-grpc`
