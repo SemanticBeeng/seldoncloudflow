@@ -6,10 +6,10 @@ import scala.collection.JavaConverters._
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.protobuf.ByteString
-import org.tensorflow.framework.tensor.TensorProto
-import org.tensorflow.framework.tensor_shape.TensorShapeProto
-import tensorflow.serving.model.ModelSpec
-import tensorflow.serving.predict._
+import org.tensorflow.framework.TensorShapeProto
+import org.tensorflow.framework.TensorShapeProto._
+import org.tensorflow.framework.TensorProto
+import tensorflow.serving._
 import java.lang.reflect.Type
 import java.nio._
 import java.util
@@ -91,14 +91,14 @@ object TensorConverter {
   def avroToProto(modelname: String, signaturename: String, tensors: Map[String, Tensor]): PredictRequest = {
     val dataMap = tensors.map {
       case (n, t) ⇒
-        val tensorshape = Some(TensorShapeProto(t.tensorshape.dim.map(dim ⇒ TensorShapeProto.Dim(dim.size))))
+        val tensorshape = Some(TensorShapeProto(t.tensorshape.dim.map(dim ⇒ Dim(dim.size))))
         val tensorProto = t.dtype match {
-          case DataType.DT_FLOAT  ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_FLOAT, tensorShape = tensorshape, floatVal = t.float_data.get)
-          case DataType.DT_DOUBLE ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_DOUBLE, tensorShape = tensorshape, doubleVal = t.double_data.get)
-          case DataType.DT_INT64  ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_INT64, tensorShape = tensorshape, int64Val = t.long_data.get)
-          case DataType.DT_INT32  ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_INT32, tensorShape = tensorshape, intVal = t.int_data.get)
-          case DataType.DT_BOOL   ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_BOOL, tensorShape = tensorshape, boolVal = t.boolean_data.get)
-          case _                  ⇒ TensorProto(dtype = org.tensorflow.framework.types.DataType.DT_STRING, tensorShape = tensorshape, stringVal = t.string_data.get.map(s ⇒ ByteString.copyFrom(s.getBytes)))
+          case DataType.DT_FLOAT  ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_FLOAT, tensorShape = tensorshape, floatVal = t.float_data.get)
+          case DataType.DT_DOUBLE ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_DOUBLE, tensorShape = tensorshape, doubleVal = t.double_data.get)
+          case DataType.DT_INT64  ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_INT64, tensorShape = tensorshape, int64Val = t.long_data.get)
+          case DataType.DT_INT32  ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_INT32, tensorShape = tensorshape, intVal = t.int_data.get)
+          case DataType.DT_BOOL   ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_BOOL, tensorShape = tensorshape, boolVal = t.boolean_data.get)
+          case _                  ⇒ TensorProto(dtype = org.tensorflow.framework.DataType.DT_STRING, tensorShape = tensorshape, stringVal = t.string_data.get.map(s ⇒ ByteString.copyFrom(s.getBytes)))
         }
         (n, tensorProto)
     }
@@ -111,15 +111,15 @@ object TensorConverter {
       case (name, t) ⇒
         val tensorshape = TensorShape(t.tensorShape.get.dim.map(dim ⇒ Dim(dim.size, "")))
         val tensor = t.dtype match {
-          case org.tensorflow.framework.types.DataType.DT_FLOAT ⇒
+          case org.tensorflow.framework.DataType.DT_FLOAT ⇒
             Tensor(dtype = DataType.DT_FLOAT, tensorshape = tensorshape, float_data = Some(t.floatVal))
-          case org.tensorflow.framework.types.DataType.DT_DOUBLE ⇒
+          case org.tensorflow.framework.DataType.DT_DOUBLE ⇒
             Tensor(dtype = DataType.DT_DOUBLE, tensorshape = tensorshape, double_data = Some(t.doubleVal))
-          case org.tensorflow.framework.types.DataType.DT_INT64 ⇒
+          case org.tensorflow.framework.DataType.DT_INT64 ⇒
             Tensor(dtype = DataType.DT_INT64, tensorshape = tensorshape, long_data = Some(t.int64Val))
-          case org.tensorflow.framework.types.DataType.DT_INT32 ⇒
+          case org.tensorflow.framework.DataType.DT_INT32 ⇒
             Tensor(dtype = DataType.DT_INT32, tensorshape = tensorshape, int_data = Some(t.intVal))
-          case org.tensorflow.framework.types.DataType.DT_BOOL ⇒
+          case org.tensorflow.framework.DataType.DT_BOOL ⇒
             Tensor(dtype = DataType.DT_BOOL, tensorshape = tensorshape, boolean_data = Some(t.boolVal))
           case _ ⇒
             Tensor(dtype = DataType.DT_STRING, tensorshape = tensorshape, string_data = Some(t.stringVal.map(_.toString)))

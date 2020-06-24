@@ -2,13 +2,9 @@ package com.lightbend.seldon.executors
 
 import io.grpc._
 import io.grpc.stub._
-import org.tensorflow.framework.tensor._
-import org.tensorflow.framework.tensor_shape._
-import org.tensorflow.framework.types._
+import org.tensorflow.framework._
 import pipelines.examples.modelserving.recommender.avro._
-import tensorflow.serving.model._
-import tensorflow.serving.predict._
-import tensorflow.serving.prediction_service._
+import tensorflow.serving._
 
 class SeldonTFGRPCExecutor(modelName: String, host: String, port: Int) extends SeldonBaseExecutor(modelName, s"$host:$port") {
 

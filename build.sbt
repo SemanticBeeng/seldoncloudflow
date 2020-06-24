@@ -12,11 +12,12 @@ version in ThisBuild := thisVersion
 test in ThisBuild := {}
 
 lazy val protocols =  (project in file("./protocol"))
+  .enablePlugins(CloudflowLibraryPlugin)
   .settings(
-    PB.targets in Compile := Seq(
-      scalapb.gen() -> (sourceManaged in Compile).value),
+//    PB.targets in Compile := Seq(
+//      scalapb.gen -> (sourceManaged in Compile).value),
     libraryDependencies ++= Seq(
-      "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
+       "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
       "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
     ) ++ grpcDependencies,
 //    dependencyOverrides += "io.grpc" % "grpc-netty" % "1.20.0",
@@ -26,7 +27,7 @@ lazy val protocols =  (project in file("./protocol"))
   )
 
 lazy val support = (project in file("./support"))
-  .enablePlugins(CloudflowAkkaStreamsLibraryPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "support",
     version := thisVersion,

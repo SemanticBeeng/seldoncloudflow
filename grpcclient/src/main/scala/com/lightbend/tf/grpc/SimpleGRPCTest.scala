@@ -2,11 +2,9 @@ package com.lightbend.tf.grpc
 
 import io.grpc._
 import io.grpc.stub.MetadataUtils
-import org.tensorflow.framework.tensor._
-import org.tensorflow.framework.tensor_shape._
-import org.tensorflow.framework.types._
-import tensorflow.serving.model._
-import tensorflow.serving.predict._
+import org.tensorflow.framework._
+import org.tensorflow.framework.TensorShapeProto._
+import tensorflow.serving._
 import tensorflow.serving.prediction_service._
 import com.lightbend.seldon.configuration.ModelServingConfiguration._
 
@@ -47,7 +45,7 @@ object SimpleGRPCTest {
     0.to(10).foreach { _ ⇒
       val start = System.currentTimeMillis()
       // Build products and users proto
-      val tensorshape = Some(TensorShapeProto(Seq(TensorShapeProto.Dim(products.size.toLong), TensorShapeProto.Dim(1l))))
+      val tensorshape = Some(TensorShapeProto(Seq(Dim(products.size.toLong), Dim(1l))))
       val productProto = TensorProto(dtype = DataType.DT_FLOAT, tensorShape = tensorshape, floatVal = products.map(_.toFloat))
       val userProto = TensorProto(dtype = DataType.DT_FLOAT, tensorShape = tensorshape, floatVal = products.map(_ ⇒ users.toFloat))
 
