@@ -5,9 +5,9 @@ import com.lightbend.seldon.executors.SeldonTFGRPCExecutor
 import com.lightbend.seldon.executors.tensor.TFBaseExecutor
 import io.grpc._
 import io.grpc.stub._
+import tensorflow.serving.prediction_service._
 //import io.grpc.util.RoundRobinLoadBalancerFactory
 import tensorflow.modelserving.avro._
-import tensorflow.serving.prediction_service._
 
 // Implementation is based on
 // https://github.com/saturnism/grpc-by-example-java/blob/master/kubernetes-lb-example/echo-client-lb-api/src/main/java/com/example/grpc/client/ClientSideLoadBalancedEchoClient.java

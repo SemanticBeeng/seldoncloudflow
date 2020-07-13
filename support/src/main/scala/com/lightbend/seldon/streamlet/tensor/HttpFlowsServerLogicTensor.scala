@@ -33,7 +33,7 @@ class HttpFlowsServerLogicTensor(
 
   override def run(): Unit = {
     // Process input
-    sourceWithOffsetContext(inlet).via(dataFlow).runWith(committableSink(outlet))
+    sourceWithCommittableContext(inlet).via(dataFlow).runWith(committableSink(outlet))
     // Start HTTP Server
     startServer(context, containerPort)
   }

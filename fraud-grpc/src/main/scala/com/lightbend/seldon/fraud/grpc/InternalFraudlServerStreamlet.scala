@@ -3,7 +3,6 @@ package com.lightbend.seldon.fraud.grpc
 import cloudflow.akkastream._
 import cloudflow.streamlets.StreamletShape
 import cloudflow.streamlets.avro._
-import com.lightbend.seldon.configuration.ModelServingConfiguration._
 import com.lightbend.seldon.executors.tensor._
 import com.lightbend.seldon.streamlet.tensor._
 import tensorflow.modelserving.avro._

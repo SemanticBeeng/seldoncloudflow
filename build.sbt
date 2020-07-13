@@ -16,10 +16,10 @@ lazy val protocols =  (project in file("./protocol"))
   .settings(
 //    PB.targets in Compile := Seq(
 //      scalapb.gen -> (sourceManaged in Compile).value),
-    libraryDependencies ++= Seq(
+    libraryDependencies ++= /*Seq(
        "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
       "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
-    ) ++ grpcDependencies,
+    ) ++*/ grpcDependencies,
 //    dependencyOverrides += "io.grpc" % "grpc-netty" % "1.20.0",
 //    dependencyOverrides += "io.grpc" % "grpc-protobuf" % "1.20.0",
 //    dependencyOverrides += "io.grpc" % "grpc-stub" % "1.20.0",

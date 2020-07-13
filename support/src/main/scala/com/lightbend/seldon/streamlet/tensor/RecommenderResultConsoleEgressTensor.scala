@@ -18,7 +18,7 @@ final case object RecommenderResultConsoleEgressTensor extends AkkaStreamlet {
   override def createLogic = new RunnableGraphStreamletLogic() {
 
     // Runnable graph
-    def runnableGraph = sourceWithOffsetContext(in).map(write(_)).to(committableSink)
+    def runnableGraph = sourceWithCommittableContext(in).map(write(_)).to(committableSink)
   }
 
   // Write model serving results

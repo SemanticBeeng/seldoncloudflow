@@ -33,7 +33,7 @@ class HttpFlowsServerLogic(
 
   override def run(): Unit = {
 
-    sourceWithOffsetContext(inlet).via(dataFlow).runWith(committableSink(outlet))
+    sourceWithCommittableContext(inlet).via(dataFlow).runWith(committableSink(outlet))
     startServer(context, containerPort)
   }
 

@@ -1,7 +1,7 @@
 package com.lightbend.seldon.streamlet.fraud
 
 import akka.NotUsed
-import akka.kafka.ConsumerMessage.CommittableOffset
+import akka.kafka.ConsumerMessage.Committable
 import akka.stream.ClosedShape
 import akka.stream.scaladsl.{ GraphDSL, Partition, RunnableGraph }
 import cloudflow.akkastream._
@@ -42,7 +42,7 @@ final case object FraudCalculatorTensor extends AkkaStreamlet {
           import GraphDSL.Implicits._
 
           // The partitioning lambda
-          val partition = builder.add(Partition[(ServingResult, CommittableOffset)](3, message ⇒ {
+          val partition = builder.add(Partition[(ServingResult, Committable)](3, message ⇒ {
             val source = message._1.inputRecord.inputs.get(input)
             val result = message._1.modelResult.outputs.get(output)
             if (source.isDefined && result.isDefined) {
@@ -57,7 +57,7 @@ final case object FraudCalculatorTensor extends AkkaStreamlet {
             } else 2
           }))
 
-          sourceWithOffsetContext(in) ~> partition.in
+          sourceWithCommittableContext(in) ~> partition.in
 
           partition.out(0) ~> committableSink(normals)
           partition.out(1) ~> committableSink(frauds)
