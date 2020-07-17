@@ -25,9 +25,10 @@ class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
 
   final override val shape = StreamletShape.withInlets(in).withOutlets(out)
 
-  println(s"Fraud model server with local model at : $localDirectory")
-  val executor = new TensorFlowModelExecutorTensor(descriptor, localDirectory)
+  override protected def createLogic(): AkkaStreamletLogic = {
 
-  override protected def createLogic(): AkkaStreamletLogic =
+    println(s"Fraud model server with local model at : $localDirectory")
+    val executor = new TensorFlowModelExecutorTensor(descriptor, localDirectory)
     new HttpFlowsServerLogicTensor(this, executor, in, out)
+  }
 }

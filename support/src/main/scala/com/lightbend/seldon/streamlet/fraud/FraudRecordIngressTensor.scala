@@ -24,10 +24,10 @@ final case object FraudRecordIngressTensor extends AkkaStreamlet {
   // Shape
   final override val shape = StreamletShape.withOutlets(out)
 
-  println(s"Starting Data Ingress with frequency $DATA_FREQUENCY")
-
   // Create Logic
   override final def createLogic = new RunnableGraphStreamletLogic {
+
+    println(s"Starting Data Ingress with frequency $DATA_FREQUENCY")
     // Runnable graph
     def runnableGraph =
       FraudRecordIngressUtilsTensor.makeSource(DATA_FREQUENCY).to(plainSink(out))

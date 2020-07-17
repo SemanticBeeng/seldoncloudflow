@@ -46,6 +46,7 @@ lazy val grpcClient =  (project in file("./grpcclient"))
 
 lazy val SeldonGRPCModelServing = (project in file("./seldon-grpc"))
   .enablePlugins(CloudflowApplicationPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "seldon-grpc",
     version := thisVersion
@@ -55,6 +56,7 @@ lazy val SeldonGRPCModelServing = (project in file("./seldon-grpc"))
 
 lazy val SeldonRESTModelServing = (project in file("./seldon-rest"))
   .enablePlugins(CloudflowApplicationPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "seldon-rest",
     version := thisVersion
@@ -64,6 +66,7 @@ lazy val SeldonRESTModelServing = (project in file("./seldon-rest"))
 
 lazy val FraudGRPCModelServing = (project in file("./fraud-grpc"))
   .enablePlugins(CloudflowApplicationPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "fraud-grpc",
     version := thisVersion,
@@ -77,6 +80,7 @@ lazy val FraudGRPCModelServing = (project in file("./fraud-grpc"))
 
 lazy val FraudRESTModelServing = (project in file("./fraud-rest"))
   .enablePlugins(CloudflowApplicationPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "fraud-rest",
     version := thisVersion
