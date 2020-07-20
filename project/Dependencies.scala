@@ -3,7 +3,7 @@ import sbt._
 
 object Dependencies {
 
-  val grpcNetty         = "io.grpc"             % "grpc-netty"          % grpcVersion
+  val grpcNetty         = "io.grpc"             % "grpc-netty-shaded"   % grpcVersion
   val grpcProtobuf      = "io.grpc"             % "grpc-protobuf"       % grpcVersion
   val grpcStub          = "io.grpc"             % "grpc-stub"           % grpcVersion
   val grpcCore          = "io.grpc"             % "grpc-core"             % grpcVersion
