@@ -91,7 +91,7 @@ class KubernetesNameResolver(namespace: String, name: String, port: Int,
             }
           }
 
-          override def onClose(e: KubernetesClientException): Unit = {
+          override def onClose(e: WatcherException): Unit = {
             watching = false
           }
         })

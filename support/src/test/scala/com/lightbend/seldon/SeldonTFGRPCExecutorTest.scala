@@ -1,10 +1,12 @@
 package com.lightbend.seldon
 
-import org.scalatest.FlatSpec
 import pipelines.examples.modelserving.recommender.avro._
 import com.lightbend.seldon.executors._
+import org.scalatest._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AsyncWordSpec
 
-class SeldonTFGRPCExecutorTest extends FlatSpec {
+class SeldonTFGRPCExecutorTest extends AsyncWordSpec {
 
   val host = "localhost"
   val port = 8003
@@ -16,11 +18,14 @@ class SeldonTFGRPCExecutorTest extends FlatSpec {
 
   val input = new RecommenderRecord(10L, products)
 
-  "Processing of model" should "complete successfully" in {
+  "Processing of model" should {
+    "complete successfully" in {
 
-    val executor = new SeldonTFGRPCExecutor(modelName, host, port)
-    println("Model created")
-    val result = executor.score(input)
-    println(result)
+      val executor = new SeldonTFGRPCExecutor(modelName, host, port)
+      println("Model created")
+      val result = executor.score(input)
+      println(result)
+      succeed
+    }
   }
 }
