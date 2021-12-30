@@ -2,7 +2,7 @@ package com.lightbend.seldon.fraud
 
 import com.lightbend.seldon.streamlet.fraud.FraudRecordGeneratorTensor
 import org.scalatest._
-import org.scalatest.matchers.should.Matchers
+
 import org.scalatest.wordspec.AsyncWordSpec
 
 class FraudTensorDataGeneratorTest extends AsyncWordSpec {

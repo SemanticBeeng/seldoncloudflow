@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.lightbend.seldon.executors._
 import pipelines.examples.modelserving.recommender.avro._
 import org.scalatest._
-import org.scalatest.matchers.should.Matchers
+
 import org.scalatest.wordspec.AsyncWordSpec
 
 class SeldonTFRESTExecutorTest extends AsyncWordSpec {

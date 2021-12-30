@@ -5,7 +5,7 @@ import com.lightbend.seldon.converters.TensorConverter._
 import tensorflow.serving.predict.PredictResponse
 import tensorflow.support.avro._
 import org.scalatest._
-import org.scalatest.matchers.should.Matchers
+
 import org.scalatest.wordspec.AsyncWordSpec
 
 class TensorConvertertest extends AsyncWordSpec {

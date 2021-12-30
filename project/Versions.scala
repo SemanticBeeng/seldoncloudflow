@@ -1,7 +1,6 @@
 object Versions {
 
   val fabric8Version        = "5.0.0"
-//  val grpcVersion           = "1.20.0"
   val grpcVersion           = "1.24.0"
   val protoVersion          = "3.10.0" // "3.18.1"
 

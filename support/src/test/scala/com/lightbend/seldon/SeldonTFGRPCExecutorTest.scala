@@ -3,7 +3,7 @@ package com.lightbend.seldon
 import pipelines.examples.modelserving.recommender.avro._
 import com.lightbend.seldon.executors._
 import org.scalatest._
-import org.scalatest.matchers.should.Matchers
+
 import org.scalatest.wordspec.AsyncWordSpec
 
 class SeldonTFGRPCExecutorTest extends AsyncWordSpec {

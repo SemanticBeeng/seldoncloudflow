@@ -4,7 +4,7 @@ import com.lightbend.seldon.executors.tensor._
 import tensorflow.modelserving.avro._
 import tensorflow.support.avro._
 import org.scalatest._
-import org.scalatest.matchers.should.Matchers
+
 import org.scalatest.wordspec.AsyncWordSpec
 
 // To run this test, execute the following command:
