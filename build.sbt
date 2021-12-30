@@ -26,7 +26,7 @@ lazy val protocols =  (project in file("./protocol"))
   )
 
 lazy val support = (project in file("./support"))
-  .enablePlugins(CloudflowAkkaStreamsLibraryPlugin)
+  .enablePlugins(CloudflowAkkaPlugin)
   .settings(
     name := "support",
     version := thisVersion,
@@ -115,6 +115,8 @@ lazy val commonSettings = Seq(
   scalacOptions in Test := scalacTestCompileOptions,
   scalacOptions in (Compile, console) := commonScalacOptions,
   scalacOptions in (Test, console) := commonScalacOptions,
+
+  evictionErrorLevel := Level.Info,
 
   scalariformPreferences := scalariformPreferences.value
     .setPreference(AlignParameters, true)

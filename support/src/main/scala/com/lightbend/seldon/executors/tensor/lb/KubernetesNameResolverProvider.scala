@@ -21,7 +21,7 @@ class KubernetesNameResolverProvider extends NameResolverProvider {
   override protected def priority = 5
 
   // URI here is in the form kubernetes:///{namespace}/{service}/{port}
-  override def newNameResolver(targetUri: URI, params: Attributes): NameResolver =
+  override def newNameResolver(targetUri: URI, args: NameResolver.Args): NameResolver =
 
     targetUri.getScheme == SCHEME match {
       case true ⇒
