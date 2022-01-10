@@ -39,7 +39,11 @@ object RecordIngressUtils {
   // Make source
   def makeSource(frequency: FiniteDuration = dataFrequencyMilliseconds): Source[RecommenderRecord, NotUsed] = {
     Source.repeat(RecordGenerator)
-      .map(gen ⇒ gen.generateRecord())
+      .map(gen ⇒ {
+        val rec = gen.generateRecord()
+        println(rec.toString)
+        rec
+      })
       .throttle(1, frequency)
   }
 }
