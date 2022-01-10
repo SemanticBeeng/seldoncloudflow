@@ -4,41 +4,45 @@ metadata:
   name: rest-tfserving
 spec:
   name: resttfserving
+  protocol: tensorflow
+  transport: rest
   predictors:
-    - protocol: tensorflow
-      transport: rest
-      componentSpecs:
+    - componentSpecs:
         - spec:
             containers:
               - args:
                   - --port=8500
                   - --rest_api_port=8501
                   - --model_name=recommender
-                  - --model_base_path=s3://fdp-killrweather-data/kubeflow/recommeder/model-updated/recommender
+                  - --model_base_path=/mnt/sharedLibs/models/recommender #s3://fdp-killrweather-data/kubeflow/recommeder/model-updated/recommender
                 image: tensorflow/serving:1.14.0
                 name: recommender
                 ports:
                   - containerPort: 8501
                     name: http
-                env:
-                  - name: "AWS_REGION"
-                    value: "eu-west-1"
-                  - name: "S3_REGION"
-                    value: "eu-west-1"
-                  - name: "S3_ENDPOINT"
-                    value: "s3.eu-west-1.amazonaws.com"
-                  - name: "S3_USE_HTTPS"
-                    value: "1"
-                  - name: "S3_VERIFY_SSL"
-                    value: "1"
-                  - name: "AWS_ACCESS_KEY_ID"
-                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "accessKey" } }
-                  - name: "AWS_SECRET_ACCESS_KEY"
-                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "secretKey" } }
-                volumes:
-                  - name: secret-volume
-                    secret:
-                      secretName: s3-credentials
+                #                env:
+                #                  - name: "AWS_REGION"
+                #                    value: "eu-west-1"
+                #                  - name: "S3_REGION"
+                #                    value: "eu-west-1"
+                #                  - name: "S3_ENDPOINT"
+                #                    value: "s3.eu-west-1.amazonaws.com"
+                #                  - name: "S3_USE_HTTPS"
+                #                    value: "1"
+                #                  - name: "S3_VERIFY_SSL"
+                #                    value: "1"
+                #                  - name: "AWS_ACCESS_KEY_ID"
+                #                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "accessKey" } }
+                #                  - name: "AWS_SECRET_ACCESS_KEY"
+                #                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "secretKey" } }
+                volumeMounts:
+                  - mountPath: /mnt/sharedLibs
+                    name: models-volume
+            volumes:
+              - name: models-volume
+                persistentVolumeClaim:
+                  claimName: nfs-pvc-cloudflow
+
       graph:
         name: recommender
         type: MODEL
