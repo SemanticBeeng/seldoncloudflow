@@ -1,10 +1,10 @@
 package com.lightbend.seldon.tensor
 
 import com.lightbend.seldon.executors.tensor.TensorFlowModelExecutorTensor
+import com.lightbend.seldon.utils.FileUtils
 import tensorflow.modelserving.avro._
 import tensorflow.support.avro._
 import org.scalatest._
-
 import org.scalatest.wordspec.AsyncWordSpec
 
 class TensorFlowModelExecutorTensorTest extends AsyncWordSpec {
@@ -16,7 +16,7 @@ class TensorFlowModelExecutorTensorTest extends AsyncWordSpec {
     bucket = None
   )
 
-  val localDirectory = "/Users/boris/Projects/TFGRPC/data/recommender/model/1"
+  val localDirectory = FileUtils.getModelPath("data/fraud/model/1") //"/Users/boris/Projects/TFGRPC/data/recommender/model/1"
 
   val products = Seq(1L, 2L, 3L, 4L)
   val user = 10L

@@ -45,7 +45,8 @@ class SeldonTFGRPCExecutor(modelName: String, host: String, port: Int) extends S
     val request = PredictRequest(modelSpec = Some(model), inputs = Map("products" -> productProto, "users" -> userProto))
     try {
       val response = serverWithHeaders.predict(request)
-      //    println(s"Responce ${response.toString}")
+      println(s"Request ${request.toString}")
+      println(s"Responce ${response.toString}")
       val probabilities = response.outputs.get("predictions").get.floatVal
       val predictions = probabilities.map(_.toDouble)
         .zip(record.products).map(r ⇒ (r._2.toString, r._1)).unzip

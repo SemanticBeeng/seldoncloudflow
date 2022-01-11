@@ -5,6 +5,7 @@ import com.lightbend.seldon.executors.SeldonTFGRPCExecutor
 import io.grpc._
 import io.grpc.stub._
 import tensorflow.modelserving.avro._
+
 import tensorflow.serving.prediction_service._
 
 class SeldonTFGRPCExecutorTensor(deployment: String, modelName: String, model: String, signature: String, host: String, port: Int)
@@ -37,7 +38,10 @@ class SeldonTFGRPCExecutorTensor(deployment: String, modelName: String, model: S
       val response = serverWithHeaders.predict(request)
       Right(ServingOutput(protoToAvro(response)))
     } catch {
-      case t: Throwable ⇒ Left(t.getMessage)
+      case t: Throwable ⇒ {
+        t.printStackTrace()
+        Left(t.getMessage)
+      }
     }
   }
 

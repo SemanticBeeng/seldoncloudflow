@@ -3,6 +3,7 @@ package com.lightbend.seldon.grpc
 import cloudflow.akkastream._
 import cloudflow.streamlets._
 import cloudflow.streamlets.avro._
+import com.lightbend.seldon.configuration.ModelServingConfiguration.{ GRPC_HOST, GRPC_PORT }
 import com.lightbend.seldon.executors._
 import com.lightbend.seldon.streamlet.HttpFlowsServerLogic
 import pipelines.examples.modelserving.recommender.avro._
@@ -21,8 +22,8 @@ class GRPCModelServerStreamlet extends AkkaServerStreamlet {
   val host = "ambassador.seldon.svc.cluster.local" // cluster
   val port = 80 // cluster
 
-  val executor = new SeldonTFGRPCExecutor("recommender", host, port)
-
+  val executor = new SeldonTFGRPCExecutor("recommender", GRPC_HOST, GRPC_PORT)
+  println(s"Host $GRPC_HOST and Port ${GRPC_PORT}")
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogic(this, executor, in, out)
 }

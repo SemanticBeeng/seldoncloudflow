@@ -15,7 +15,7 @@ spec:
                   - --rest_api_port=8501
                   - --model_name=recommender
                   - --model_base_path=/mnt/sharedLibs/models/recommender #s3://fdp-killrweather-data/kubeflow/recommeder/model-updated/recommender
-                image: tensorflow/serving:1.14.0
+                image: tensorflow/serving:2.6.2
                 name: recommender
                 ports:
                   - containerPort: 8501

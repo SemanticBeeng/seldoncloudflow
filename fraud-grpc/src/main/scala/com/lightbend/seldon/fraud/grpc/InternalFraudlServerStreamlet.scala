@@ -6,6 +6,7 @@ import cloudflow.streamlets.avro._
 import com.lightbend.seldon.configuration.ModelServingConfiguration._
 import com.lightbend.seldon.executors.tensor._
 import com.lightbend.seldon.streamlet.tensor._
+import com.lightbend.seldon.utils.FileUtils
 import tensorflow.modelserving.avro._
 
 class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
@@ -18,7 +19,7 @@ class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
     bucket = None
   )
 
-  val localDirectory = "/Users/boris/Projects/TFGRPC/data/fraud/model/1"
+  val localDirectory = FileUtils.getModelPath("data/fraud/model/1") //"/Users/boris/Projects/TFGRPC/data/fraud/model/1"
 
   // Streamlet
   val in = AvroInlet[SourceRequest]("card-records")

@@ -12,8 +12,8 @@ import org.scalatest.wordspec.AsyncWordSpec
 class SeldonTFGRPCExecutorTensorTest extends AsyncWordSpec {
 
   val signature = ""
-  val host = "localhost"
-  val port = 8003
+  val host = "10.0.50.147"
+  val port = 8500
 
   // the model's name.
   val modelName = "recommender"
@@ -28,7 +28,6 @@ class SeldonTFGRPCExecutorTensorTest extends AsyncWordSpec {
 
   "Processing of model" should {
     "complete successfully" in {
-
       val executor = new SeldonTFGRPCExecutorTensor("grpc-tfserving", modelName, "recommender", signature, host, port)
       println("Model created")
       val result = executor.score(SourceRequest(
