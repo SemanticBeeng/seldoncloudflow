@@ -12,8 +12,8 @@ import org.scalatest.wordspec.AsyncWordSpec
 class FraudTFGRPCExecutorTensorTest extends AsyncWordSpec {
 
   val signature = ""
-  val host = "localhost"
-  val port = 5001
+  val host = "10.0.230.23" // replace this with the correct IP of the svc named grpc-tfserving-model-<modelname>
+  val port = 8500
 
   // the model's name.
   val modelName = "fraud"

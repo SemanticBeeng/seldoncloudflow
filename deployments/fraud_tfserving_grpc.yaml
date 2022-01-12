@@ -16,8 +16,8 @@ spec:
                   - --port=8500
                   - --rest_api_port=8501
                   - --model_name=fraud
-                  - --model_base_path=s3://fdp-killrweather-data/kubeflow/fraud_detection/model/fraud
-                image: tensorflow/serving:1.14.0
+                  - --model_base_path=/mnt/sharedLibs/models/fraud #s3://fdp-killrweather-data/kubeflow/fraud_detection/model/fraud
+                image: tensorflow/serving:2.6.2
                 name: fraud
                 ports:
                   - containerPort: 8500
@@ -30,20 +30,20 @@ spec:
                     cpu: "1"
                     memory: 1Gi
                 env:
-                  - name: "AWS_REGION"
-                    value: "eu-west-1"
-                  - name: "S3_REGION"
-                    value: "eu-west-1"
-                  - name: "S3_ENDPOINT"
-                    value: "s3.eu-west-1.amazonaws.com"
-                  - name: "S3_USE_HTTPS"
-                    value: "1"
-                  - name: "S3_VERIFY_SSL"
-                    value: "1"
-                  - name: "AWS_ACCESS_KEY_ID"
-                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "accessKey" } }
-                  - name: "AWS_SECRET_ACCESS_KEY"
-                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "secretKey" } }
+#                  - name: "AWS_REGION"
+#                    value: "eu-west-1"
+#                  - name: "S3_REGION"
+#                    value: "eu-west-1"
+#                  - name: "S3_ENDPOINT"
+#                    value: "s3.eu-west-1.amazonaws.com"
+#                  - name: "S3_USE_HTTPS"
+#                    value: "1"
+#                  - name: "S3_VERIFY_SSL"
+#                    value: "1"
+#                  - name: "AWS_ACCESS_KEY_ID"
+#                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "accessKey" } }
+#                  - name: "AWS_SECRET_ACCESS_KEY"
+#                    valueFrom: { secretKeyRef: { name: "s3-credentials", key: "secretKey" } }
                   - name: TRACING
                     value: '1'
                   - name: JAEGER_AGENT_HOST
@@ -56,11 +56,14 @@ spec:
                     value: const
                   - name: JAEGER_SAMPLER_PARAM
                     value: '1'
-                terminationGracePeriodSeconds: 1
-                volumes:
-                  - name: secret-volume
-                    secret:
-                      secretName: s3-credentials
+                volumeMounts:
+                  - mountPath: /mnt/sharedLibs
+                    name: models-volume
+            terminationGracePeriodSeconds: 1
+            volumes:
+              - name: models-volume
+                persistentVolumeClaim:
+                  claimName: nfs-pvc-cloudflow
       graph:
         name: fraud
         type: MODEL
@@ -68,7 +71,7 @@ spec:
           service_port: 8500
           type: GRPC
       name: model
-      replicas: 15
+      replicas: 1
       svcOrchSpec:
         env:
           - name: TRACING
