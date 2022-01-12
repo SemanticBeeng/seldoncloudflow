@@ -19,7 +19,7 @@ class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
     bucket = None
   )
 
-  val localDirectory = FileUtils.getModelPath("data/fraud/model/1") //"/Users/boris/Projects/TFGRPC/data/fraud/model/1"
+  val localDirectory = FileUtils.getModelPath("data/fraud/model/1")
 
   // Streamlet
   val in = AvroInlet[SourceRequest]("card-records")

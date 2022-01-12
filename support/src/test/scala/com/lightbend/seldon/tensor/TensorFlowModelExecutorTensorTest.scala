@@ -16,7 +16,7 @@ class TensorFlowModelExecutorTensorTest extends AsyncWordSpec {
     bucket = None
   )
 
-  val localDirectory = FileUtils.getModelPath("data/fraud/model/1") //"/Users/boris/Projects/TFGRPC/data/recommender/model/1"
+  val localDirectory = FileUtils.getModelPath("data/fraud/model/1")
 
   val products = Seq(1L, 2L, 3L, 4L)
   val user = 10L
