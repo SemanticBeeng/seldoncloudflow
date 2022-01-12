@@ -20,8 +20,10 @@ class RESTFraudModelServerStreamlet extends AkkaServerStreamlet {
 
   final override val shape = StreamletShape.withInlets(in).withOutlets(out)
 
-  println(s"Fraud model server. Rest endpoint : $REST_PATH")
-  val executor = new SeldonTFRESTExecutorTensor(modelName, signature, REST_PATH)
+  lazy val executor = {
+    println(s"Fraud model server. Rest endpoint : $REST_PATH")
+    new SeldonTFRESTExecutorTensor(modelName, signature, REST_PATH)
+  }
 
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogicTensor(this, executor, in, out)
