@@ -52,6 +52,12 @@ object ModelServingConfiguration {
     case _: Throwable ⇒ "http://ambassador.seldon.svc.cluster.local:80/seldon/seldon/rest-tfserving/v1/models/recommender/:predict"
   }
 
+  val GRPC_FRAUD_MODEL_PATH = try {
+    config.getString("grpc.model.path")
+  } catch {
+    case _: Throwable ⇒ "/mnt/sharedLibs/models/fraud/1"
+  }
+
   // Load
   val DATA_FREQUENCY: FiniteDuration = (try {
     Duration(config.getString("source.frequency"))

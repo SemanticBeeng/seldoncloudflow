@@ -35,6 +35,7 @@ lazy val grpcClient =  (project in file("./grpcclient"))
   .dependsOn(support)
   .settings(commonSettings)
 
+
 lazy val SeldonGRPCModelServing = (project in file("./seldon-grpc"))
   .enablePlugins(CloudflowApplicationPlugin, CloudflowAkkaPlugin)
   .settings(
@@ -52,6 +53,7 @@ lazy val SeldonRESTModelServing = (project in file("./seldon-rest"))
   )
   .settings(commonSettings)
   .dependsOn(support)
+
 
 
 lazy val FraudGRPCModelServing = (project in file("./fraud-grpc"))

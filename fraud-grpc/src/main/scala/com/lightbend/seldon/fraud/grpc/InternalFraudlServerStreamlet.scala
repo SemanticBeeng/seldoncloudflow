@@ -8,6 +8,7 @@ import com.lightbend.seldon.executors.tensor._
 import com.lightbend.seldon.streamlet.tensor._
 import com.lightbend.seldon.utils.FileUtils
 import tensorflow.modelserving.avro._
+import com.lightbend.seldon.configuration.ModelServingConfiguration.{ GRPC_FRAUD_MODEL_PATH }
 
 class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
 
@@ -19,7 +20,7 @@ class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
     bucket = None
   )
 
-  val localDirectory = FileUtils.getModelPath("data/fraud/model/1")
+  val localDirectory = GRPC_FRAUD_MODEL_PATH
 
   // Streamlet
   val in = AvroInlet[SourceRequest]("card-records")
@@ -27,8 +28,10 @@ class InternalFraudlServerStreamlet extends AkkaServerStreamlet {
 
   final override val shape = StreamletShape.withInlets(in).withOutlets(out)
 
-  println(s"Fraud model server with local model at : $localDirectory")
-  val executor = new TensorFlowModelExecutorTensor(descriptor, localDirectory)
+  lazy val executor = {
+    println(s"Fraud model server with local model at : $localDirectory")
+    new TensorFlowModelExecutorTensor(descriptor, localDirectory)
+  }
 
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogicTensor(this, executor, in, out)
