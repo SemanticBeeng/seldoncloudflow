@@ -54,8 +54,6 @@ lazy val SeldonRESTModelServing = (project in file("./seldon-rest"))
   .settings(commonSettings)
   .dependsOn(support)
 
-
-
 lazy val FraudGRPCModelServing = (project in file("./fraud-grpc"))
   .enablePlugins(CloudflowApplicationPlugin,CloudflowAkkaPlugin)
   .settings(
@@ -73,7 +71,6 @@ lazy val FraudRESTModelServing = (project in file("./fraud-rest"))
   )
   .settings(commonSettings)
   .dependsOn(support)
-
 
 lazy val commonScalacOptions = Seq(
   "-encoding", "UTF-8",

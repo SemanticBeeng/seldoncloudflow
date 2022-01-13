@@ -22,8 +22,10 @@ class GRPCModelServerStreamlet extends AkkaServerStreamlet {
   val host = "ambassador.seldon.svc.cluster.local" // cluster
   val port = 80 // cluster
 
-  val executor = new SeldonTFGRPCExecutor("recommender", GRPC_HOST, GRPC_PORT)
+  lazy val executor = new SeldonTFGRPCExecutor("recommender", GRPC_HOST, GRPC_PORT)
+
   println(s"Host $GRPC_HOST and Port ${GRPC_PORT}")
+
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogic(this, executor, in, out)
 }

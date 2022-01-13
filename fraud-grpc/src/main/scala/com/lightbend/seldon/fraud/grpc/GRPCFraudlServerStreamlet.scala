@@ -21,8 +21,10 @@ class GRPCFraudlServerStreamlet extends AkkaServerStreamlet {
 
   final override val shape = StreamletShape.withInlets(in).withOutlets(out)
 
-  println(s"Fraud model server. GRPC endpoint : $GRPC_HOST:$GRPC_PORT")
-  val executor = new SeldonTFGRPCExecutorTensor(deployment, modelName, modelName, signature, GRPC_HOST, GRPC_PORT)
+  lazy val executor = {
+    println(s"Fraud model server. GRPC endpoint : $GRPC_HOST:$GRPC_PORT")
+    new SeldonTFGRPCExecutorTensor(deployment, modelName, modelName, signature, GRPC_HOST, GRPC_PORT)
+  }
 
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogicTensor(this, executor, in, out)

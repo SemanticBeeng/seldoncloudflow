@@ -15,9 +15,10 @@ class RESTModelServerStreamlet extends AkkaServerStreamlet {
 
   final override val shape = StreamletShape.withInlets(in).withOutlets(out)
 
-  println(s"Starting Rest Model Serving with location $REST_PATH")
-
-  val executor = new SeldonTFRESTExecutor("recommender", REST_PATH)
+  lazy val executor = {
+    println(s"Starting Rest Model Serving with location $REST_PATH")
+    new SeldonTFRESTExecutor("recommender", REST_PATH)
+  }
 
   override protected def createLogic(): AkkaStreamletLogic =
     new HttpFlowsServerLogic(this, executor, in, out)
